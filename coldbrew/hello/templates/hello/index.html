@@ -1,7 +1,11 @@
 {% extends "hello/layout.html" %}
+{% load static %}
 {% block title %}
     Hello
 {% endblock %}
 {% block body %}
-    Javascript hasn't been added yet
+    <p id="text">Javascript hasn't been added yet</p>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'hello/index.js' %}"></script>
 {% endblock %}
