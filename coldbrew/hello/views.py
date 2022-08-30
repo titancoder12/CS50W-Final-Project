@@ -7,3 +7,6 @@ def hello(request):
 
 def index(request):
     return render(request, 'hello/index.html')
+
+def channel(request, id):
+    return render(request, 'hello/channel.html')
