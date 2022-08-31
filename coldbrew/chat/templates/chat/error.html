@@ -1,0 +1,12 @@
+{% extends "chat/layout.html" %}
+{% load static %}
+{% block title %}
+    {{ error_header }}
+{% endblock %}
+{% block body %}
+    <h1 class="center">{{ error_header }}</h1>
+    <h3 class="center">{{ error_discription|safe }}</h3>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'chat/index.js' %}"></script>
+{% endblock %}
