@@ -7,13 +7,14 @@ class User(AbstractUser):
 
 class Channel(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="channels")
+    name = models.TextField(max_length=25)
 
 class Channel_person(models.Model):
-    person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="channels_in")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="channels_in")
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name="people")
 
 class Channel_message(models.Model):
-    person = models.ForeignKey(User, on_delete=models.PROTECT, related_name="messages")
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="messages")
     text = models.TextField()
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name="channel_messages")
 

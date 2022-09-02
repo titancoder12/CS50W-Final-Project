@@ -1,0 +1,15 @@
+{% extends "chat/layout.html" %}
+{% load static %}
+{% block title %}
+    Zip.it
+{% endblock %}
+{% block body %}
+    <h1 class="center">My Channels</h1>
+    <div id="channels"></div>
+    <div id="addchannel">
+        <button class='btn btn-primary ms-5' id="addchannelbtn">Add a new channel</button>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'chat/channels.js' %}"></script>
+{% endblock %}

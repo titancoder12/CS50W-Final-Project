@@ -12,6 +12,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
 
     # API Routes
-    path("api/channels", views.channelsAPI, name='channels')
+    path("api/channels", views.channelsAPI, name='channels_api'),
+    path("api/createchannel", views.newchannel, name='new_channel')
 
 ]

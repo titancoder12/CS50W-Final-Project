@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from .models import User, Channel, Channel_person, Channel_message, Invite
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+import json
 
 # Create your views here.
 def login_view(request):
@@ -106,8 +107,22 @@ def invites(request):
 def channelsAPI(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
-    queryset = Channel.objects.filter(creator=User(request.user.id)).values()
+    channels_in = Channel_person.objects.filter(user=User(request.user.id)).values()
     channels = []
-    for channel in queryset:
-        channels.append(channel)
+    i=0
+    for channel_in in channels_in:
+        channel = Channel.objects.filter(id=channel_in["channel_id"]).values()
+        print(channel[0])
+        channels.append(channel[0])
+        i+=1
+
+
     return JsonResponse(channels, safe=False)
+
+def newchannel(request):
+    request_json = json.loads(request.body)
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    channel = Channel(creator=User(request.user.id), name=request_json.get("channel_name", ""))
+    channel.save()

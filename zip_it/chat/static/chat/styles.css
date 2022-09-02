@@ -1,0 +1,11 @@
+.center {
+    text-align: center;
+}
+
+.graytext {
+    color: lightgray;
+}
+
+.hovermouse:hover {
+    cursor: pointer;
+}
