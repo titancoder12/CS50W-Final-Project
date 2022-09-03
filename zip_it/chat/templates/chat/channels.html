@@ -4,10 +4,14 @@
     Zip.it
 {% endblock %}
 {% block body %}
-    <h1 class="center">My Channels</h1>
+    <h1 class="center">Channels</h1>
     <div id="channels"></div>
-    <div id="addchannel">
-        <button class='btn btn-primary ms-5' id="addchannelbtn">Add a new channel</button>
+    <br>
+    <br>
+    <div class='center' id="addchannel">
+        <h1>Add a Channel</h1>
+        <input style='display:inline; width: 500px;' class="form-control ms-5" id="newchannelname" placeholder="Name of Channel"></input>
+        <button class='btn btn-primary' id="addchannelbtn">Add Channel</button>
     </div>
 {% endblock %}
 {% block script %}

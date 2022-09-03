@@ -4,10 +4,11 @@
     Zip.it
 {% endblock %}
 {% block body %}
-    <h1 class="center">Welcome to Zip.it!</h1>
     {% if user.is_authenticated %}
+        <h1 class="center">Welcome to Zip.it, {{ user.username }}!</h1>
         <h3 class="center">If this is your first time, you can read the tutorial <a href="/tutorial">here</a>!</h3>
     {% else %}
+        <h1 class="center">Welcome to Zip.it!</h1>
         <h3 class="center">It looks like you haven't logged in yet! You can log in <a href="/login">here</a>, or if you haven't created an account, you can create one by clicking on <a href="/register">this</a> link.</h3>
     {% endif %}
 {% endblock %}

@@ -7,6 +7,7 @@ from .models import User, Channel, Channel_person, Channel_message, Invite
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def login_view(request):
@@ -119,10 +120,83 @@ def channelsAPI(request):
 
     return JsonResponse(channels, safe=False)
 
+@csrf_exempt
 def newchannel(request):
     request_json = json.loads(request.body)
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
+    
     channel = Channel(creator=User(request.user.id), name=request_json.get("channel_name", ""))
     channel.save()
+
+    channel_person = Channel_person(user=User(request.user.id), channel=Channel(channel.id))
+    channel_person.save()
+    return HttpResponse(status=200)
+
+def send_invite(request):
+    request_json = json.loads(request.body)
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    
+    # Check if user is actually in channel
+    channel = request_json.get("channel", "")
+    channel_person = Channel_person.objects.filter(user=User(request.user.id), channel=Channel(channel))
+
+    if channel_person[0] == {}:
+        return HttpResponse(status=401)
+
+    # Make sure recipient is not already in channel
+    channel_person_recipient = Channel_person.objects.filter(channel=Channel(channel), user=User(request_json.get("recipient", "")))
+    
+    if channel_person[0] != {}:
+        return HttpResponse(status=409)
+
+    invite = Invite(sender=User(request.user.id), reciever=User(request_json.get("recipient", "")), channel=Channel(request_json.get("channel", "")))
+    invite.save()
+    return HttpResponse(status=200)
+
+def list_invites(request):
+    invites_queryset = Invite.objects.filter(reciever=User(request.user.id), accepted=False)
+    invites = []
+    for invite in invites_queryset:
+        dict = invite
+        dict["channel_name"] = str(invite.channel.name)
+        invites.append(dict)
+        print('invite!')
+    print(invites)
+    return invites
+
+def accept_invite(request):
+    request_json = json.loads(request.body)
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    invite = Invite.objects.filter(reciever=User(request.user.id), id=request_json.get("invite_id", "")).values()
+    if invite[0] == {}:
+        return HttpResponse(status=404)
+
+    invite = Invite.objects.get(reciever=User(request.user.id), id=request_json.get("invite_id", ""))
+    invite.accepted = True
+    invite.save()
+
+    channel_person = Channel_person(user=User(request.user.id), channel=Channel(invite.channel))
+    channel_person.save()
+    return HttpResponseRedirect('/channel/'+invite.channel)
+
+def decline_invite(request):
+    request_json = json.loads(request.body)
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    invite = Invite.objects.filter(reciever=User(request.user.id), id=request_json.get("invite_id", "")).values()
+    if invite[0] == {}:
+        return HttpResponse(status=404)
+    
+    invite = Invite.objects.get(reciever=User(request.user.id), id=request_json.get("invite_id", ""))
+    invite.delete()
+    return HttpResponse(status=200)
+

@@ -9,3 +9,7 @@
 .hovermouse:hover {
     cursor: pointer;
 }
+
+.nobreak {
+    display: inline;
+}
