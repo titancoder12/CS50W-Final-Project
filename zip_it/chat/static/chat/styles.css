@@ -13,3 +13,7 @@
 .nobreak {
     display: inline;
 }
+
+.right {
+    text-align: right;
+}

@@ -18,5 +18,6 @@ urlpatterns = [
     path("api/sendinvite", views.send_invite, name="send_invite"),
     path("api/accept_invite", views.accept_invite, name="accept_invite"),
     path("api/decline_invite", views.decline_invite, name="decline_invite"),
+    path("api/user/<int:id>", views.user, name="user")
 
 ]

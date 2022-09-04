@@ -158,16 +158,22 @@ def send_invite(request):
     return HttpResponse(status=200)
 
 def list_invites(request):
-    invites_queryset = Invite.objects.filter(reciever=User(request.user.id), accepted=False)
+    invites_object = Invite.objects.filter(reciever=User(request.user.id), accepted=False)
+    invites_queryset = Invite.objects.filter(reciever=User(request.user.id), accepted=False).values()
     invites = []
-    for invite in invites_queryset:
-        dict = invite
+    i = 0
+    for invite in invites_object:
+        dict = invites_queryset[i]
+        print(invite)
+        print(type(invite.channel.name))
         dict["channel_name"] = str(invite.channel.name)
         invites.append(dict)
         print('invite!')
+        i += 1
     print(invites)
-    return invites
+    return JsonResponse(invites, safe=False)
 
+@csrf_exempt
 def accept_invite(request):
     request_json = json.loads(request.body)
 
@@ -186,6 +192,7 @@ def accept_invite(request):
     channel_person.save()
     return HttpResponseRedirect('/channel/'+invite.channel)
 
+@csrf_exempt
 def decline_invite(request):
     request_json = json.loads(request.body)
 
@@ -200,3 +207,7 @@ def decline_invite(request):
     invite.delete()
     return HttpResponse(status=200)
 
+def user(request, id):
+    userqueryset = User.objects.filter(id=id).values()
+    user = userqueryset[0]
+    return JsonResponse(user, safe=False)
