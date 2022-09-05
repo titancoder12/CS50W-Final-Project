@@ -17,3 +17,22 @@
 .right {
     text-align: right;
 }
+
+.bottom {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: white;  
+}
+
+.messages {
+    height: 600px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#messages {
+    padding-bottom: auto;
+    border-style: solid; 
+}

@@ -1,11 +1,11 @@
 {% extends "chat/layout.html" %}
 {% load static %}
 {% block title %}
-    Zip.it
+    
 {% endblock %}
 {% block body %}
-    <div id="messages"></div>
-    <div id="post">
+    <div id="messages" class="messages"></div>
+    <div id="newmessage" class="bottom">
         <textarea class="form-control" id="messagetext" placeholder="Write your message here..." style="height: 100px; resize: none;"></textarea>
         <button id="sendmessagetext" class="btn btn-primary ms-auto">Send</button>
     </div>

@@ -12,6 +12,9 @@ function loadchannels() {
     .then((result) => {
         for (let i = 0; i < result.length; i++) {
             const channeldiv = document.createElement('div');
+            channeldiv.addEventListener('click', () => {
+                location.replace('/channel/'+result[i].id);
+            })
             channeldiv.className = 'hovermouse';
             channeldiv.innerHTML = `<hr><h4 class='center'>${result[i].name}</h4><br><hr>`;
             document.querySelector('#channels').append(channeldiv);

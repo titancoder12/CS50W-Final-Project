@@ -8,7 +8,9 @@ function load_invites() {
     .then((invites)=>{
         console.log(invites);
         for (let i = 0; i < invites.length; i++) {
+            id = Number(invites[i].id);
             const invite_div = document.createElement('div');
+            invite_div.id = id;
             invite_div.className = 'center hovermouse';
             fetch('/api/user/'+invites[i].sender_id)
             .then(response=>response.json())
@@ -17,13 +19,13 @@ function load_invites() {
                 `<hr>
                 <h4 class='nobreak'>${invites[i].channel_name}</h4>
                 <br>
-                <p class='graytext'>Sent by ${user.username}</p>
-                <button class="right btn btn-success" onclick='accept_invite(${invites[i].id})' id="accept${invites[i].id}">Accept</button>
-                <button class="right btn btn-danger" onclick='decline_invite(${invites[i].id})' id="decline${invites[i].id}">Decline</button>
+                <p class='graytext'>Sent by ${user}</p>
+                <button class="right btn btn-success" onclick='accept_invite(${id})' id="accept${id}">Accept</button>
+                <button class="right btn btn-danger" onclick='decline_invite(${id})' id="decline${id}">Decline</button>
                 <hr>`;
                 document.querySelector('#invites').append(invite_div);
                 console.log('invite');
-            })
+            });
         }
     });
 }
@@ -36,7 +38,7 @@ function accept_invite(id) {
         body: JSON.stringify({
             invite_id: id
         })
-    });
+    }).then(()=>location.replace('/channel/'+id));
 }
 
 function decline_invite(id) {
@@ -48,4 +50,6 @@ function decline_invite(id) {
             invite_id: id
         })
     });
+    var elem = document.getElementById(id);
+    elem.parentNode.removeChild(elem);
 }
