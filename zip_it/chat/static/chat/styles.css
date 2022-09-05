@@ -26,7 +26,9 @@
 }
 
 .messages {
-    height: 600px;
+    height: 100vh;
+    margin-top: 30px;
+    margin-bottom: -30px;
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
@@ -38,9 +40,9 @@
 
 .navbar {
     overflow: hidden;
-    background-color:  #333;
-    position: fixed; /* Set the navbar to fixed position */
+    background-color: rgb(37, 37, 37);
+    position: sticky; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
     opacity: 1.0;
-  }
+}

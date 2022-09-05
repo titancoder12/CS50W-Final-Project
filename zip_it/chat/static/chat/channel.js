@@ -27,16 +27,16 @@ function load_messages() {
         //         }
         //     }
         // }
-        if (messages == loaded_messages){
+        if (JSON.stringify(messages) == JSON.stringify(loaded_messages)){
             console.log('loaded messages is messages');
             return null;
         }
         else {
-            document.querySelector('#messages').innerHTML = '';
-            console.log('loaded messages isnt messages');
+            //console.log('loaded messages isnt messages');
             loaded_messages = messages;
             console.log(loaded_messages);
         }
+        document.querySelector('#messages').innerHTML = '';
         var j = 0;
         for (let i = 0; i < messages.length; i++) {
             fetch(`/api/user/${messages[i].user_id}`)
@@ -71,5 +71,7 @@ function create_message() {
         document.querySelector('#messagetext').value = '';
         document.querySelector('#messages').innerHTML = '';
         load_messages();
+        var elem = document.getElementById('messages');
+        elem.scrollBottom = elem.scrollHeight;
     });
 }
