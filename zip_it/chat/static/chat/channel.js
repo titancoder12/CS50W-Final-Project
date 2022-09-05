@@ -1,5 +1,7 @@
+const id = window.location.pathname.slice(9);
+var loaded_messages = [];
 document.addEventListener('DOMContentLoaded', function(){
-    fetch(`/api/channel/${get_id()}`)
+    fetch(`/api/channel/${id}`)
     .then(response=>response.json())
     .then((channel)=>{
         document.querySelector('title').innerHTML = channel.name;
@@ -7,20 +9,35 @@ document.addEventListener('DOMContentLoaded', function(){
     load_messages();
     document.querySelector('#sendmessagetext').addEventListener('click', () => {
         create_message()
-    })
+    });
+
+    setInterval(load_messages, 1000);
 })
 
-function get_id() {
-    id = window.location.pathname.slice(9);
-    return id;
-}
-
 function load_messages() {
-    document.querySelector('#messages').innerHTML = '';
-    channel_id = get_id();
+    channel_id = id;
     fetch(`/api/messages/${channel_id}`)
     .then(response=>response.json())
+    .then(messages=>Array.from(messages))
     .then((messages)=>{
+        // if (messages.length == load_messages.length){
+        //     for (let i=0; i<messages.length; i++){
+        //         if (messages[i]["id"] != loaded_messages[i]["id"]){
+        //             return null;
+        //         }
+        //     }
+        // }
+        if (messages == loaded_messages){
+            console.log('loaded messages is messages');
+            return null;
+        }
+        else {
+            document.querySelector('#messages').innerHTML = '';
+            console.log('loaded messages isnt messages');
+            loaded_messages = messages;
+            console.log(loaded_messages);
+        }
+        var j = 0;
         for (let i = 0; i < messages.length; i++) {
             fetch(`/api/user/${messages[i].user_id}`)
             .then(response=>response.json())
@@ -33,13 +50,14 @@ function load_messages() {
                 <hr>`;
                 document.querySelector('#messages').append(messagediv);
             })
-            console.log(`message ${i}`)
+            j++;
         }
     })
+    return null;
 }
 
 function create_message() {
-    channel_id = get_id();
+    channel_id = id;
     text = document.querySelector('#messagetext').value;
     fetch('/api/message', {
         method: 'POST',
@@ -51,6 +69,7 @@ function create_message() {
         })
     }).then(()=>{
         document.querySelector('#messagetext').value = '';
+        document.querySelector('#messages').innerHTML = '';
         load_messages();
     });
 }
