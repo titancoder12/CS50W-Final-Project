@@ -81,6 +81,21 @@ def channel(request, id):
             'error_header': '401 Unauthorized',
             'error_discription': 'Click <a href=\'/login\'>here</a> to log in before you vist this page.' 
         })
+def invite(request):
+    if request.user.is_authenticated:
+        channels_queryset = Channel.objects.all().values()
+        channels = []
+        for channel in channels_queryset:
+            channels.append(channel)
+
+        return render(request, 'chat/invite.html', {
+            'channels': channels
+        })
+    else:
+        return render(request, 'chat/error.html', {
+            'error_header': '401 Unauthorized',
+            'error_discription': 'Click <a href=\'/login\'>here</a> to log in before you vist this page.' 
+        })
 
 def tutorial(request):
     return render(request, 'chat/tutorial.html')

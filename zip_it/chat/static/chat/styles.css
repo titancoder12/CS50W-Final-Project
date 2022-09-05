@@ -25,7 +25,7 @@
     background-color: white;  
 }
 
-.messages {
+#messages {
     height: 100vh;
     margin-top: 30px;
     margin-bottom: -30px;
@@ -34,9 +34,9 @@
     flex-direction: column-reverse;
 }
 
-#messages {
+/*#messages {
     padding-bottom: auto;
-}
+}*/
 
 .navbar {
     overflow: hidden;

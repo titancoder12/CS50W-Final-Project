@@ -10,6 +10,7 @@ urlpatterns = [
     path('login', views.login_view, name='login'),
     path('logout', views.logout_view, name='logout'),
     path('register', views.register, name='register'),
+    path('invite', views.invite, name='invite'),
 
     # API Routes
     path("api/channels", views.channelsAPI, name='channels_api'),

@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function(){
     .then((channel)=>{
         document.querySelector('title').innerHTML = channel.name;
     });
-    load_messages();
     document.querySelector('#sendmessagetext').addEventListener('click', () => {
         create_message()
     });
@@ -36,6 +35,7 @@ function load_messages() {
             loaded_messages = messages;
             console.log(loaded_messages);
         }
+        
         document.querySelector('#messages').innerHTML = '';
         var j = 0;
         for (let i = 0; i < messages.length; i++) {
@@ -43,6 +43,7 @@ function load_messages() {
             .then(response=>response.json())
             .then(username=>{
                 const messagediv = document.createElement('div');
+                messagediv.id = messages[i].id;
                 messagediv.innerHTML = 
                 `<hr>
                 <p class='ms-4'>${username} said:</p>
