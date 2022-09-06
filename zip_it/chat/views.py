@@ -83,7 +83,7 @@ def channel(request, id):
         })
 def invite(request):
     if request.user.is_authenticated:
-        channels_queryset = Channel.objects.all().values()
+        channels_queryset = Channel.objects.filter(creator=User(request.user.id)).values()
         channels = []
         for channel in channels_queryset:
             channels.append(channel)
@@ -149,6 +149,7 @@ def newchannel(request):
     channel_person.save()
     return HttpResponse(status=200)
 
+@csrf_exempt
 def send_invite(request):
     request_json = json.loads(request.body)
 
@@ -158,17 +159,27 @@ def send_invite(request):
     # Check if user is actually in channel
     channel = request_json.get("channel", "")
     channel_person = Channel_person.objects.filter(user=User(request.user.id), channel=Channel(channel))
-
-    if channel_person[0] == {}:
+    print(channel_person)
+    if channel_person == []:
         return HttpResponse(status=401)
 
+    # Check if user exists
+    check_recipient =  User.objects.filter(username=request_json.get("recipient", ""))
+    if check_recipient == []:
+        return HttpResponse(status=404)
+
     # Make sure recipient is not already in channel
-    channel_person_recipient = Channel_person.objects.filter(channel=Channel(channel), user=User(request_json.get("recipient", "")))
+    channel_person_recipient = Channel_person.objects.filter(channel=Channel(channel), user=User.objects.get(username=request_json.get("recipient", ""))).values()
     
-    if channel_person[0] != {}:
+    if channel_person_recipient[0] != {}:
         return HttpResponse(status=409)
 
-    invite = Invite(sender=User(request.user.id), reciever=User(request_json.get("recipient", "")), channel=Channel(request_json.get("channel", "")))
+    # Check if already sent invite
+    check_invite = Invite.objects.filter(sender=User(request.user.id), reciever=User.objects.get(username=request_json.get("recipient", ""), channel=request_json.get("channel", ""))).values()
+    if check_invite[0] != {}:
+        return HttpResponse(status=409)
+
+    invite = Invite(sender=User(request.user.id), reciever=User.objects.get(username=request_json.get("recipient", "")), channel=Channel(request_json.get("channel", "")))
     invite.save()
     return HttpResponse(status=200)
 
@@ -227,6 +238,7 @@ def user(request, id):
     userqueryset = User.objects.filter(id=id).values()
     user = userqueryset[0]
     return JsonResponse(user['username'], safe=False)
+
 
 @csrf_exempt
 def message(request):

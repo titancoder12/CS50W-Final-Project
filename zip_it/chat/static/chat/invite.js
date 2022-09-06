@@ -8,22 +8,26 @@ function invite() {
         return null;
     }
 
-    fetch('/api/message', {
+    channels = document.querySelector('#recipient');
+    index = channels.value;
+    selected_option = channels[index];
+
+    fetch('/api/send_invite', {
         method: 'POST',
         //headers: {'X-CSRFToken': csrftoken},
         //mode: 'same-origin',
         body: JSON.stringify({
-            channel: document.querySelector('#channels').value,
-            recipient: document.querySelector('#recipient').value
+            channel: document.querySelector('#channels').id,
+            recipient: selected_option.id
         })
     })
-    .then((response)=>response.json())
-    .then(result=>{
-        if (result.message == "Recipient username does not exist.") {
+    .then((response)=>response.status)
+    .then(status=>{
+        if (status=404) {
             alert("The recipient username that you typed in is not valid.", 'danger');
         }
         else {
-            alert("Invite sent.");
+            alert("Invite sent.", "success");
         }
     });
 }
