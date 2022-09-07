@@ -10,7 +10,7 @@ function invite() {
 
     channels = document.querySelector('#recipient');
     index = channels.value;
-    selected_option = channels[index];
+    selected_option_id = channels[index];
 
     fetch('/api/send_invite', {
         method: 'POST',
