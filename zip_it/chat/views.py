@@ -155,6 +155,14 @@ def send_invite(request):
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
+
+    recipient_object = User.objects.filter(username=request_json.get("recipient", "")).values()
+    print(recipient_object)
+    print(request_json.get("recipient", ''))
+    if str(recipient_object) == '<QuerySet []>':
+        return HttpResponse(status=404)
+    
+    recipient_id = recipient_object[0]["id"]
     
     # Check if user is actually in channel
     channel = request_json.get("channel", "")
@@ -169,17 +177,19 @@ def send_invite(request):
         return HttpResponse(status=404)
 
     # Make sure recipient is not already in channel
-    channel_person_recipient = Channel_person.objects.filter(channel=Channel(channel), user=User.objects.get(username=request_json.get("recipient", ""))).values()
+    channel_person_recipient = Channel_person.objects.filter(channel=Channel(channel), user=User(recipient_id)).values()
     
-    if channel_person_recipient[0] != {}:
+    if str(channel_person_recipient) != '<QuerySet []>':
+        print('CONFLICT CONFLICT WAIT THERE IS A CONFLICT')
+        print(str(channel_person_recipient)=="<QuerySet []>")
         return HttpResponse(status=409)
 
     # Check if already sent invite
-    check_invite = Invite.objects.filter(sender=User(request.user.id), reciever=User.objects.get(username=request_json.get("recipient", ""), channel=request_json.get("channel", ""))).values()
-    if check_invite[0] != {}:
+    check_invite = Invite.objects.filter(sender=User(request.user.id), reciever=User(recipient_id), channel=Channel(channel)).values()
+    if str(check_invite) != '<QuerySet []>':
         return HttpResponse(status=409)
 
-    invite = Invite(sender=User(request.user.id), reciever=User.objects.get(username=request_json.get("recipient", "")), channel=Channel(request_json.get("channel", "")))
+    invite = Invite(sender=User(request.user.id), reciever=User(recipient_id), channel=Channel(channel))
     invite.save()
     return HttpResponse(status=200)
 
@@ -207,7 +217,7 @@ def accept_invite(request):
         return HttpResponse(status=401)
 
     invite = Invite.objects.filter(reciever=User(request.user.id), id=int(request_json.get("invite_id", ""))).values()
-    if invite[0] == {}:
+    if invite == []:
         return HttpResponse(status=404)
 
     invite = Invite.objects.get(reciever=User(request.user.id), id=int(request_json.get("invite_id", "")))
@@ -227,7 +237,7 @@ def decline_invite(request):
         return HttpResponse(status=401)
 
     invite = Invite.objects.filter(reciever=User(request.user.id), id=request_json.get("invite_id", "")).values()
-    if invite[0] == {}:
+    if invite == []:
         return HttpResponse(status=404)
     
     invite = Invite.objects.get(reciever=User(request.user.id), id=request_json.get("invite_id", ""))
@@ -250,7 +260,7 @@ def message(request):
     channel = request_json.get("channel", "")
     text = request_json.get("text", "")
 
-    if Channel_person.objects.filter(channel=Channel(int(channel)), user=User(request.user.id)).values()[0] == {}:
+    if Channel_person.objects.filter(channel=Channel(int(channel)), user=User(request.user.id)).values()[0] == []:
         return HttpResponse(status=401)
 
     message = Channel_message(channel=Channel(int(channel)), user=User(request.user.id), text=text)
@@ -262,7 +272,7 @@ def messages(request, channel_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if Channel_person.objects.filter(channel=Channel(int(channel_id)), user=User(request.user.id)).values()[0] == {}:
+    if Channel_person.objects.filter(channel=Channel(int(channel_id)), user=User(request.user.id)).values()[0] == []:
         return HttpResponse(status=401)
 
     messages_queryset = Channel_message.objects.filter(channel=Channel(channel_id)).order_by('-id').values()

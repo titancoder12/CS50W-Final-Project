@@ -6,14 +6,16 @@
 {% block body %}
     <h1 class="center">Invite</h1>
     <div class="center" id="invite_div">
-        <input class="form-control" id="recipient" placeholder="Username of invite recipient..."></input>
-        <select class="form-control" id="channels" name="channels">
-            <option selected disabled value="default">Select a channel...</option>
-        {% for channel in channels %}
-            <option value="{{ channel.id }}">{{ channel.name }}</option>
-        {% endfor %}
-        </select>
-        <button id="submit_invite" class="btn btn-primary">Invite</button>
+        <form>
+            <input type="text" class="form-control" id="recipient" placeholder="Username of invite recipient..."></input>
+            <select class="form-control" id="channels" name="channels">
+                <option selected disabled value="default">Select a channel...</option>
+            {% for channel in channels %}
+                <option value="{{ channel.id }}">{{ channel.name }}</option>
+            {% endfor %}
+            </select>
+        </form>
+        <button type="submit" id="submit_invite" class="btn btn-primary">Invite</button>
     </div>
 {% endblock %}
 {% block script %}

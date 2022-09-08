@@ -8,26 +8,28 @@ function invite() {
         return null;
     }
 
-    channels = document.querySelector('#recipient');
-    index = channels.value;
-    selected_option_id = channels[index];
+    channels = document.querySelector('#channels');
 
     fetch('/api/send_invite', {
         method: 'POST',
         //headers: {'X-CSRFToken': csrftoken},
         //mode: 'same-origin',
         body: JSON.stringify({
-            channel: document.querySelector('#channels').id,
-            recipient: selected_option.id
+            channel: document.querySelector('#channels').value,
+            recipient: document.querySelector('#recipient').value
         })
     })
     .then((response)=>response.status)
     .then(status=>{
-        if (status=404) {
+        console.log(status);
+        if (status == 404) {
             alert("The recipient username that you typed in is not valid.", 'danger');
         }
-        else {
+        else if (status == 200){
             alert("Invite sent.", "success");
+        }
+        else {
+            alert("You already sent this person an invite to this channel.", 'danger')
         }
     });
 }
