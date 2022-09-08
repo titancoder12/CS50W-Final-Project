@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', function(){
     .then((channel)=>{
         document.querySelector('title').innerHTML = channel.name;
     });
-    document.querySelector('#sendmessagetext').addEventListener('click', () => {
-        create_message()
-    });
+
+    document.querySelector('#sendmessagetext').addEventListener('click', create_message);
 
     setInterval(load_messages, 1000);
 })
@@ -18,6 +17,9 @@ function load_messages() {
     fetch(`/api/messages/${channel_id}`)
     .then(response=>response.json())
     .then(messages=>Array.from(messages))
+    .then((messages)=>messages.sort(function(a,b) {
+        return b.id - a.id
+    }))
     .then((messages)=>{
         // if (messages.length == load_messages.length){
         //     for (let i=0; i<messages.length; i++){
@@ -27,28 +29,29 @@ function load_messages() {
         //     }
         // }
         if (JSON.stringify(messages) == JSON.stringify(loaded_messages)){
-            console.log('loaded messages is messages');
             return null;
         }
         else {
-            //console.log('loaded messages isnt messages');
+            document.querySelector('#messages').innerHTML = '';
             loaded_messages = messages;
-            console.log(loaded_messages);
+            //console.log(loaded_messages);
         }
         
-        document.querySelector('#messages').innerHTML = '';
         var j = 0;
+        //console.log(messages);
         for (let i = 0; i < messages.length; i++) {
             fetch(`/api/user/${messages[i].user_id}`)
             .then(response=>response.json())
             .then(username=>{
                 const messagediv = document.createElement('div');
                 messagediv.id = messages[i].id;
+                console.log(messages[i])
                 messagediv.innerHTML = 
                 `<hr>
                 <p class='ms-4'>${username} said:</p>
                 <h4 class='ms-3'>${messages[i].text}</h4>
                 <hr>`;
+                console.log(messages[i].text);
                 document.querySelector('#messages').append(messagediv);
             })
             j++;
@@ -70,9 +73,8 @@ function create_message() {
         })
     }).then(()=>{
         document.querySelector('#messagetext').value = '';
-        document.querySelector('#messages').innerHTML = '';
-        load_messages();
         var elem = document.getElementById('messages');
-        elem.scrollBottom = elem.scrollHeight;
+        //elem.scrollBottom = elem.scrollHeight;
+        window.scrollTo(0, document.body.scrollHeight);
     });
 }

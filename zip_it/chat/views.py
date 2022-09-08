@@ -279,7 +279,7 @@ def messages(request, channel_id):
     messages = []
     for message in messages_queryset:
         messages.append(message)
-
+        print(message["text"])
     print(messages)
     return JsonResponse(messages, safe=False)
 
