@@ -21,9 +21,17 @@ to actually run the server.
 This application has a front end and a back end. The front end is made with HTML, CSS, Javascript, and Django Templates. The back end is made with Python and Django. The front end calls the back end via an API.
 
 ## Files
-| File        | Purpose         |
-| ----------- | --------------- |
-| views.py | API and views |
-| models.py | Database Tables |
-| urls.py | Paths |
-| admin.py | Admin 
+chat/views.py - API and views  
+chat/models.py - Database structure    
+chat/urls.py - Register paths  
+chat/admin.py - Register models to admin
+chat/templates/chat/channel.html -  
+chat/templates/chat/channels.html -  
+chat/templates/chat/error.html -  
+chat/templates/chat/index.html -  
+chat/templates/chat/invite.html -  
+chat/templates/chat/invites.html - 
+chat/templates/chat/login.html -  
+chat/templates/chat/register.html -  
+chat/templates/chat/layout.html  -
+

@@ -28,7 +28,7 @@
 #messages {
     height: 100vh;
     margin-top: 30px;
-    margin-bottom: -30px;
+    margin-bottom: 30px;
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
