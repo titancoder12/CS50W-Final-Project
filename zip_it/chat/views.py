@@ -97,8 +97,9 @@ def invite(request):
             'error_discription': 'Click <a href=\'/login\'>here</a> to log in before you vist this page.' 
         })
 
-def tutorial(request):
-    return render(request, 'chat/tutorial.html')
+# Don't want tutorial anymore
+#def tutorial(request):
+#    return render(request, 'chat/tutorial.html')
 
 def channels(request):
     if request.user.is_authenticated:
