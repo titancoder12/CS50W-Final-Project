@@ -83,11 +83,13 @@ def channel(request, id):
         })
 def invite(request):
     if request.user.is_authenticated:
-        channels_queryset = Channel.objects.filter(creator=User(request.user.id)).values()
+        channels_queryset = Channel_person.objects.filter(user=User(request.user.id)).values()
         channels = []
         for channel in channels_queryset:
-            channels.append(channel)
+            channel_object = Channel.objects.filter(id=channel['channel_id']).values()
+            channels.append(channel_object[0])
 
+        print(channels)
         return render(request, 'chat/invite.html', {
             'channels': channels
         })
@@ -203,6 +205,7 @@ def list_invites(request):
         print(invite)
         print(type(invite.channel.name))
         dict["channel_name"] = str(invite.channel.name)
+        dict["channel_id"] = str(invite.channel.id)
         invites.append(dict)
         print('invite!')
         i += 1
@@ -272,7 +275,7 @@ def messages(request, channel_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if Channel_person.objects.filter(channel=Channel(int(channel_id)), user=User(request.user.id)).values()[0] == []:
+    if Channel_person.objects.filter(channel=Channel(int(channel_id)), user=User(request.user.id)).values() == '<QuerySet []>':
         return HttpResponse(status=401)
 
     messages_queryset = Channel_message.objects.filter(channel=Channel(channel_id)).order_by('-id').values()

@@ -20,7 +20,7 @@ function load_invites() {
                 <h4 class='nobreak'>${invites[i].channel_name}</h4>
                 <br>
                 <p class='graytext'>Sent by ${user}</p>
-                <button class="right btn btn-success" onclick='accept_invite(${id})' id="accept${id}">Accept</button>
+                <button class="right btn btn-success" onclick='accept_invite(${id},${invites[i].channel_id})' id="accept${id}">Accept</button>
                 <button class="right btn btn-danger" onclick='decline_invite(${id})' id="decline${id}">Decline</button>
                 <hr>`;
                 document.querySelector('#invites').append(invite_div);
@@ -30,7 +30,7 @@ function load_invites() {
     });
 }
 
-function accept_invite(id) {
+function accept_invite(id, channel_id) {
     fetch('/api/accept_invite', {
         method: 'POST',
         //headers: {'X-CSRFToken': csrftoken},
@@ -38,7 +38,7 @@ function accept_invite(id) {
         body: JSON.stringify({
             invite_id: id
         })
-    }).then(()=>location.replace('/channel/'+id));
+    }).then(()=>location.replace('/channel/'+channel_id));
 }
 
 function decline_invite(id) {

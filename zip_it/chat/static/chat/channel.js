@@ -16,7 +16,7 @@ function load_messages() {
     channel_id = id;
     fetch(`/api/messages/${channel_id}`)
     .then(response=>response.json())
-    .then(messages=>Array.from(messages))
+    //.then(messages=>Array.from(messages))
     .then((messages)=>messages.sort(function(a,b) {
         return b.id - a.id
     }))
@@ -37,24 +37,22 @@ function load_messages() {
             //console.log(loaded_messages);
         }
         
-        var j = 0;
-        //console.log(messages);
+        console.log(messages);
         for (let i = 0; i < messages.length; i++) {
+            const messagediv = document.createElement('div');
+            document.querySelector('#messages').append(messagediv);
             fetch(`/api/user/${messages[i].user_id}`)
             .then(response=>response.json())
             .then(username=>{
-                const messagediv = document.createElement('div');
                 messagediv.id = messages[i].id;
-                console.log(messages[i])
+                console.log(messages[i]);
                 messagediv.innerHTML = 
                 `<hr>
                 <p class='ms-4'>${username} said:</p>
                 <h4 class='ms-3'>${messages[i].text}</h4>
                 <hr>`;
                 console.log(messages[i].text);
-                document.querySelector('#messages').append(messagediv);
             })
-            j++;
         }
     })
     return null;
