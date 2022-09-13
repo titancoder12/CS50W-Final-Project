@@ -7,31 +7,58 @@ My CS50W Capstone Project, Zip.it, is a Django Application which allows multiple
 All installation requirements are in the requirements.txt file. Python version is 3.9.12.
 
 ## Running the Application
-To run the server, just run the following commands:
+First, make sure all the requirements.txt files are installed.
+To run the server, 
+```
+cd
+```
+into the directory which you downloaded previously. Then, run
+```
+python manage.py makemigrations
+``` 
 ```
 python manage.py migrate
 ```
+
 to migrate the server and
 ```
 python manage.py runserver
 ```
 to actually run the server.
 
+## Distinctiveness and Complexity
+My project is distinct
+
+## Youtube Demo
+Click [here](https://www.youtube.com) to watch the demo.
+
 ## Application Structure
-This application has a front end and a back end. The front end is made with HTML, CSS, Javascript, and Django Templates. The back end is made with Python and Django. The front end calls the back end via an API.
+This application has a front end and a back end. The front end is made with HTML, CSS, Javascript, and Django Templates. The back end is made with Python and Django. The front end calls the back end via an API using JavaScript.
 
 ## Files
-chat/views.py - API and views  
-chat/models.py - Database structure    
-chat/urls.py - Register paths  
-chat/admin.py - Register models to admin
-chat/templates/chat/channel.html -  
-chat/templates/chat/channels.html -  
-chat/templates/chat/error.html -  
-chat/templates/chat/index.html -  
-chat/templates/chat/invite.html -  
-chat/templates/chat/invites.html - 
-chat/templates/chat/login.html -  
-chat/templates/chat/register.html -  
-chat/templates/chat/layout.html  -
+#### Code
+**chat/views.py** - API and views  
+**chat/models.py** - Database structure    
+**chat/urls.py** - Register paths  
+**chat/admin.py** - Register models to admin
 
+#### Django Templates
+**chat/templates/chat/channel.html** - Displays chat channel  
+**chat/templates/chat/channels.html** - Displays all channels   
+**chat/templates/chat/error.html** - Error page  
+**chat/templates/chat/index.html** - Displays for landing page  
+**chat/templates/chat/invite.html** - Displays form to invite  
+**chat/templates/chat/invites.html** - Displays invites  
+**chat/templates/chat/login.html** - Displays form to login   
+**chat/templates/chat/register.html** - Displays form to register   
+**chat/templates/chat/layout.html**  -  Layout for all forms
+
+#### Javascript for Templates
+**chat/static/chat/channel.js** - Contacts API to add and read messages in a channel  
+**chat/static/chat/channels.js** - Contacts API to list out all the channels  
+**chat/static/chat/index.js** - Javascript for index.html  
+**chat/static/chat/invite.js** -  Contacts API to invite people to channels  
+**chat/static/chat/invites.js** - Contacts API to list out all invites, and also accepts and declines invites   
+
+#### Styling
+**chat/static/chat/styles.css** - Styles for all the templates
