@@ -8,14 +8,11 @@ All installation requirements are in the requirements.txt file. Python version i
 
 ## Running the Application
 First, make sure all the requirements.txt files are installed.
-To run the server, 
+To run the server, `cd` into the directory which you downloaded previously. Then, run
 ```
-cd
+python manage.py makemigrations chat
 ```
-into the directory which you downloaded previously. Then, run
-```
-python manage.py makemigrations
-``` 
+to make the migrations, 
 ```
 python manage.py migrate
 ```
