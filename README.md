@@ -4,9 +4,10 @@
 My CS50W Capstone Project, Zip.it, is a Django Application which allows multiple people to chat on different channels. Users that register and log in to the application can add channels, chat on channels, invite people to channels, and accept and decline invites to channels.
 
 ## Overview
-Ever since the dawn of civilization, communication has become essential for humans. We humans love to talk, and now that technology has advanced greatly, we can talk. A lot. 
-    
-I built this website because I thought it would be cool if I could make an real time application to let me chat with my friends.
+I really 
+
+## Distinctiveness and Complexity
+This project was made from scratch. I came up with this idea because I really wanted to do this and it seemed fun. All the code in this application is based off the lessons learned in the videos and problem sets of this course. My project is **not** a reimplementation of any of the problem sets. It is not a social network, because it 
 
 ## Installation
 All installation requirements are in the requirements.txt file. Python version is 3.9.12.
@@ -23,9 +24,6 @@ to migrate the server and
 python manage.py runserver
 ```
 to actually run the server.
-
-## Distinctiveness and Complexity
-My project is 
 
 ## Youtube Demo
 Click [here](https://www.youtube.com) to watch the demo.
@@ -60,3 +58,7 @@ This application has a front end and a back end. The front end is made with HTML
 
 #### Styling
 **chat/static/chat/styles.css** - Styles for all the templates
+
+#### Documentation
+**requirements.txt** - Required files for application to run  
+**README.md** - This file; all instructions and documentation
