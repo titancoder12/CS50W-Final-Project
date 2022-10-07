@@ -22,8 +22,8 @@ python manage.py runserver
 ```
 to actually run the server.
 
-## Youtube Demo TODO
-Click [TODO](https://www.youtube.com) to watch the demo.
+## Youtube Demo
+Click [here](https://www.youtube.com/watch?v=0zBnB5jH5WE) to watch the demo.
 
 ## Application Structure
 This application has a front end and a back end. The front end is made with HTML, CSS, Javascript, and Django Templates. The back end is made with Python and Django. The front end calls the back end via an API using JavaScript. The application uses a SQLite3 database. 
