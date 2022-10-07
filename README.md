@@ -4,7 +4,7 @@
 My CS50W Capstone Project, Zip.it, is a Django Application which allows multiple people to chat on different channels. Users that register and log in to the application can add channels, chat on channels, invite people to channels, and accept and decline invites to channels.
 
 ## Distinctiveness and Complexity
-This project was made from scratch. I came up with this idea because I really wanted to do this and it seemed fun to have an application that allowed people to communicate. All the code in this application is based on the lessons learned in the videos and problem sets of this course. My project is **not** a reimplementation of any of the problem sets. It is not a social network because it is a communication tool for texting other people. When compared to social networks, it does not have posting, commenting, or 'liking', which are the basic features most social networks have. On top of that, a social network usually includes many features that allow for networking. My application is merely an application with one feature in mind, texting. Texting may be part of a social network, but by itself it is not one.
+This project was made from scratch. I came up with this idea because I really wanted to do this and it seemed fun to have an application that allowed people to communicate. All the code in this application is based on the lessons learned in the videos and problem sets of this course. My project is **not** a reimplementation of any of the problem sets. It is not a social network because it is a communication tool for texting other people. When compared to social networks, it does not have posting, commenting, or 'liking', which are the basic features most social networks have. On top of that, a social network usually includes many features that allow for networking. My application is merely an application with one feature in mind, texting. Texting may be part of a social network, but by itself it is not one. It is also not an e-commerce site for obvious reasons, such as that my application is a chat app which has nothing to do with e-commerce. My project includes 5 Django models on the back end, exceeding the minimum, which is 1 model. My project includes Javascript on the front end, and is mobile responsive.
 
 ## Installation
 All installation requirements are in the requirements.txt file. Python version is 3.9.12.
@@ -22,11 +22,11 @@ python manage.py runserver
 ```
 to actually run the server.
 
-## Youtube Demo
-Click [here](https://www.youtube.com) to watch the demo.
+## Youtube Demo TODO
+Click [TODO](https://www.youtube.com) to watch the demo.
 
 ## Application Structure
-This application has a front end and a back end. The front end is made with HTML, CSS, Javascript, and Django Templates. The back end is made with Python and Django. The front end calls the back end via an API using JavaScript. The application uses a SQLite3 database.
+This application has a front end and a back end. The front end is made with HTML, CSS, Javascript, and Django Templates. The back end is made with Python and Django. The front end calls the back end via an API using JavaScript. The application uses a SQLite3 database. 
 
 ## Files
 #### Code
