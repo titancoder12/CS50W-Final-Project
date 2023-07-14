@@ -74,7 +74,9 @@ def index(request):
 
 #@login_required(redirect_field_name=None)
 def channel(request, id):
-    if request.user.is_authenticated:
+    # Check if user is authenticated and in channel.
+    print(f"{Channel_person.objects.filter(user=User(request.user.id), channel=Channel(id)).values()}", end=" = ")
+    if request.user.is_authenticated and (list(Channel_person.objects.filter(user=User(request.user.id), channel=Channel(id)).values()) != []):
         return render(request, 'chat/channel.html')
     else:
         return render(request, 'chat/error.html', {

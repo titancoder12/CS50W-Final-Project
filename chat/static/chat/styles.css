@@ -46,3 +46,7 @@
     width: 100%; /* Full width */
     opacity: 1.0;
 }
+
+.navcolor {
+    background-color:rgb(109, 41, 41)
+}
